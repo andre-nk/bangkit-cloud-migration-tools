@@ -1,0 +1,6 @@
+{
+    "database": {
+        "postgresql_dsn": "postgres://postgres:postgres@localhost:5432/portier?sslmode=disable&search_path=dbo",
+        "sqlserver_dsn": "sqlserver://sa:1234qwerASDF@localhost:1433?database=portier&schema=dbo"
+    }
+}

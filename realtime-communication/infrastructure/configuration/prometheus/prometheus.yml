@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: "nats-exporter"
+    metrics_path: "/metrics" # Prometheus metrics path for the NATS Exporter
+    static_configs:
+      - targets: ["nats-exporter:7777"] # NATS Exporter's exposed port
+
+  - job_name: "client-metrics"
+    static_configs:
+      - targets: ["client-app:8080"] # Your custom client app metrics
+
+  - job_name: "server-metrics"
+    static_configs:
+      - targets: ["server-app:1427"] # Your custom client app metrics

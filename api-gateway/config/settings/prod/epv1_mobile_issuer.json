@@ -1,0 +1,66 @@
+{
+    "prefix": "/api/v1/key-otg",
+    "ep": [
+        {
+            "endpoint": "/sign",
+            "method": "POST",
+            "output_encoding": "no-op",
+            "headers": [
+                "authorization",
+                "content-type",
+                "X-Portier-Agent"
+            ],
+            "backend_method": "POST",
+            "backend_host": "http://portier-mobile-issuer:1233",
+            "backend_url_pattern": "/key-otg/sign"
+        },
+        {
+            "endpoint": "/sign/{request_id}",
+            "method": "GET",
+            "output_encoding": "no-op",
+            "headers": [
+                "authorization",
+                "content-type",
+                "X-Portier-Agent"
+            ],
+            "qs": [
+                "token"
+            ],
+            "backend_method": "GET",
+            "backend_host": "http://portier-mobile-issuer:1233",
+            "backend_url_pattern": "/key-otg/sign/{request_id}"
+        },
+        {
+            "endpoint": "/sign/{request_id}/qr",
+            "method": "GET",
+            "output_encoding": "no-op",
+            "headers": [
+                "authorization",
+                "content-type",
+                "X-Portier-Agent"
+            ],
+            "qs": [
+                "token"
+            ],
+            "backend_method": "GET",
+            "backend_host": "http://portier-mobile-issuer:1233",
+            "backend_url_pattern": "/key-otg/sign/{request_id}/qr"
+        },
+        {
+            "endpoint": "/sign/{request_id}",
+            "method": "POST",
+            "output_encoding": "no-op",
+            "headers": [
+                "authorization",
+                "content-type",
+                "X-Portier-Agent"
+            ],
+            "qs": [
+                "token"
+            ],
+            "backend_method": "POST",
+            "backend_host": "http://portier-mobile-issuer:1233",
+            "backend_url_pattern": "/key-otg/sign/{request_id}"
+        }
+    ]
+}

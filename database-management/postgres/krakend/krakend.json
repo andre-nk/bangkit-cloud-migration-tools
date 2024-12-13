@@ -1,0 +1,217 @@
+{
+    "version": 3,
+    "name": "PostgREST API Gateway",
+    "port": 8080,
+    "timeout": "3s",
+    "endpoints": [
+      {
+        "endpoint": "/api/gfunction",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/gfunction",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/gfunction/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/gfunction",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/staff",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/staff",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/staff/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/staff",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/copy",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/copy",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/copy/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/copy",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/customize",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/customize",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/customize/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/customize",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/system",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/system",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/system/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/system",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/user",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/user",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/user/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/user",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/building",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/building",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/building/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/building",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/journal",
+        "method": "GET",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/journal",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      },
+      {
+        "endpoint": "/api/journal/insert",
+        "method": "POST",
+        "output_encoding": "no-op",
+        "backend": [
+          {
+            "url_pattern": "/journal",
+            "host": [
+              "http://postgrest-api:3000"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

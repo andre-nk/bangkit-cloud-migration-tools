@@ -1,0 +1,47 @@
+{
+    "prefix": "/api/v1/auth",
+    "ep": [
+        {
+            "endpoint": "/login",
+            "method": "POST",
+            "output_encoding": "no-op",
+            "backend_method": "POST",
+            "backend_host": "http://n8n:5678",
+            "backend_url_pattern": "/webhook/login"
+        },
+        {
+            "endpoint": "/two-factor",
+            "method": "POST",
+            "output_encoding": "no-op",
+            "backend_method": "POST",
+            "backend_host": "http://n8n:5678",
+            "backend_url_pattern": "/webhook/two-factor"
+        },
+        {
+            "endpoint": "/fingerprint",
+            "method": "POST",
+            "output_encoding": "no-op",
+            "headers": [
+                "authorization",
+                "content-type"
+            ],
+            "backend_method": "POST",
+            "backend_host": "http://n8n:5678",
+            "backend_url_pattern": "/webhook/fingerprint"
+        },
+        {
+            "endpoint": "/current",
+            "method": "GET",
+            "backend_method": "GET",
+            "backend_host": "http://n8n:5678",
+            "backend_url_pattern": "/webhook/get-current-profile"
+        },
+        {
+            "endpoint": "/current/session",
+            "method": "DELETE",
+            "backend_method": "DELETE",
+            "backend_host": "http://n8n:5678",
+            "backend_url_pattern": "/webhook/current-session"
+        }
+    ]
+}

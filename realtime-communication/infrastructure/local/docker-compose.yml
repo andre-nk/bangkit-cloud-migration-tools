@@ -1,0 +1,119 @@
+version: "3.9"
+
+services:
+  nats:
+    image: nats:latest
+    container_name: nats-server
+    ports:
+      - "4222:4222" # Client connections
+      - "8222:8222" # NATS monitoring connections
+    volumes:
+      - ../configuration/nats/server.conf:/etc/nats/server.conf:ro
+      - ../nsc_envs/nats_operator/accounts:/etc/nats/accounts:rw
+    command: ["-c", "/etc/nats/server.conf"]
+    labels:
+      logging: "promtail"
+      logging_jobname: "nats_server_logs"
+
+  nats-exporter:
+    image: synadia/prometheus-nats-exporter:latest
+    container_name: nats-exporter
+    ports:
+      - "7777:7777"
+    command: >
+      -addr 0.0.0.0
+      -port 7777
+      -varz http://nats:8222
+    depends_on:
+      - nats
+
+  client:
+    build:
+      context: ../../client
+      dockerfile: Dockerfile
+    container_name: client-agent
+    ports:
+      - "8080:8080" # Client app port
+    depends_on:
+      - nats
+    command: ["./client-agent"]
+    labels:
+      logging: "promtail"
+      logging_jobname: "client_agent_logs"
+
+  server:
+    build:
+      context: ../../server
+      dockerfile: Dockerfile
+    container_name: server-app
+    ports:
+      - "1427:1427" # Server app port
+    depends_on:
+      - nats
+    command: ["./server"]
+    labels:
+      logging: "promtail"
+      logging_jobname: "server_app_logs"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ../configuration/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090" # Prometheus UI
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    depends_on:
+      - nats-exporter
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100" # Loki API
+    volumes:
+      - ../configuration/loki/loki-config.yml:/etc/loki/config.yml:ro
+    command: -config.file=/etc/loki/config.yml
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../configuration/loki/promtail-config.yml:/etc/promtail/config.yml:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    ports:
+      - "3000:3000" # Grafana UI
+    volumes:
+      - grafana-data:/var/lib/grafana # Persist Grafana data
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin # Default admin username
+      - GF_SECURITY_ADMIN_PASSWORD=admin # Default admin password
+    depends_on:
+      - prometheus
+      - loki
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8081:8080" # cAdvisor web UI
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    labels:
+      logging: "promtail"
+      logging_jobname: "cadvisor_logs"
+
+volumes:
+  grafana-data:

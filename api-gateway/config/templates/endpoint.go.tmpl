@@ -1,0 +1,23 @@
+{{- $prefix := .prefix -}}
+{{- range $idx, $endpoint := .ep }}
+{{- if $idx }},{{ end }}
+{
+    "endpoint": "{{ $prefix }}{{ $endpoint.endpoint }}",
+    "method": "{{ $endpoint.method }}",
+    "output_encoding": "{{ if $endpoint.output_encoding }}{{ $endpoint.output_encoding }}{{ else }}json{{ end }}",
+    "input_headers": {{ if $endpoint.headers }}{{ marshal $endpoint.headers }}{{ else }}[]{{ end }},
+    "input_query_strings": {{ if $endpoint.qs }}{{ marshal $endpoint.qs }}{{ else }}[]{{ end }},
+    "backend": [
+        {
+          "url_pattern": "{{ $endpoint.backend_url_pattern }}",
+          "method": "{{ $endpoint.backend_method }}",
+          "encoding": "no-op",
+          "host": [
+            "{{ $endpoint.backend_host }}"
+          ],
+          "extra_config": {
+            {{ include "rate_limit_backend.tmpl" }}
+          }
+        }
+    ]
+}{{ end }}

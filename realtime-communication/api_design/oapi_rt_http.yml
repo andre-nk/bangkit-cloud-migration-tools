@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Portier Realtime Server HTTP API
+  description: A REST API for triggering realtime commands within the Portier Cloud and Portier Vision.
+  version: 1.0.0
+  contact:
+    name: Andreas Notokusumo
+    email: andreasnotokusumo23@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+# execute app, query SQL, download file, transfer file?
+
+paths:
+  /command:
+    post:
+      summary: ""
+      operationId: "handleCommand"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+      responses:
+        "200":
+          description: "The request was successful, and the server has returned the requested data."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reply"
+        "201":
+          description: "The request has succeeded, and a new resource was created."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reply"
+        "400":
+          description: "the server would not process the request due to client errors."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reply"
+
+components:
+  schemas:
+    Request:
+      type: object
+      required:
+        - username
+        - email
+      properties:
+        type:
+          type: string
+          example: "query"
+        command:
+          type: string
+          example: "select * from user;"
+
+    Reply:
+      type: object
+      required:
+        - response
+      properties:
+        response:
+          type: string
+          example: "Command has been executed successfully"
+        payload:
+          type: object #arbitrary
+
+security:
+  - bearerAuth: []

@@ -1,0 +1,230 @@
+{
+  "$schema": "https://www.krakend.io/schema/v3.json",
+  "version": 3,
+  "name": "portier API Gateway (DEVELOPMENT)",
+  "port": 8080,
+  "timeout": "3s",
+  "cache_ttl":  "3s",
+  "output_encoding": "json",
+  "extra_config": {},
+  "endpoints": [
+    
+{
+    "endpoint": "/api/v1/auth/login",
+    "method": "POST",
+    "output_encoding": "no-op",
+    "input_headers": [],
+    "input_query_strings": [],
+    "backend": [
+        {
+          "url_pattern": "/webhook/login",
+          "method": "POST",
+          "encoding": "no-op",
+          "host": [
+            "http://n8n:5678"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/auth/two-factor",
+    "method": "POST",
+    "output_encoding": "no-op",
+    "input_headers": [],
+    "input_query_strings": [],
+    "backend": [
+        {
+          "url_pattern": "/webhook/two-factor",
+          "method": "POST",
+          "encoding": "no-op",
+          "host": [
+            "http://n8n:5678"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/auth/fingerprint",
+    "method": "POST",
+    "output_encoding": "no-op",
+    "input_headers": ["authorization","content-type"],
+    "input_query_strings": [],
+    "backend": [
+        {
+          "url_pattern": "/webhook/fingerprint",
+          "method": "POST",
+          "encoding": "no-op",
+          "host": [
+            "http://n8n:5678"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/auth/current",
+    "method": "GET",
+    "output_encoding": "json",
+    "input_headers": [],
+    "input_query_strings": [],
+    "backend": [
+        {
+          "url_pattern": "/webhook/get-current-profile",
+          "method": "GET",
+          "encoding": "no-op",
+          "host": [
+            "http://n8n:5678"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/auth/current/session",
+    "method": "DELETE",
+    "output_encoding": "json",
+    "input_headers": [],
+    "input_query_strings": [],
+    "backend": [
+        {
+          "url_pattern": "/webhook/current-session",
+          "method": "DELETE",
+          "encoding": "no-op",
+          "host": [
+            "http://n8n:5678"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+
+{
+    "endpoint": "/api/v1/key-otg/sign",
+    "method": "POST",
+    "output_encoding": "no-op",
+    "input_headers": ["authorization","content-type","X-Portier-Agent"],
+    "input_query_strings": [],
+    "backend": [
+        {
+          "url_pattern": "/key-otg/sign",
+          "method": "POST",
+          "encoding": "no-op",
+          "host": [
+            "http://host.docker.internal:1233"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/key-otg/sign/{request_id}",
+    "method": "GET",
+    "output_encoding": "no-op",
+    "input_headers": ["authorization","content-type","X-Portier-Agent"],
+    "input_query_strings": ["token"],
+    "backend": [
+        {
+          "url_pattern": "/key-otg/sign/{request_id}",
+          "method": "GET",
+          "encoding": "no-op",
+          "host": [
+            "http://host.docker.internal:1233"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/key-otg/sign/{request_id}/qr",
+    "method": "GET",
+    "output_encoding": "no-op",
+    "input_headers": ["authorization","content-type","X-Portier-Agent"],
+    "input_query_strings": ["token"],
+    "backend": [
+        {
+          "url_pattern": "/key-otg/sign/{request_id}/qr",
+          "method": "GET",
+          "encoding": "no-op",
+          "host": [
+            "http://host.docker.internal:1233"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+},
+{
+    "endpoint": "/api/v1/key-otg/sign/{request_id}",
+    "method": "POST",
+    "output_encoding": "no-op",
+    "input_headers": ["authorization","content-type","X-Portier-Agent"],
+    "input_query_strings": ["token"],
+    "backend": [
+        {
+          "url_pattern": "/key-otg/sign/{request_id}",
+          "method": "POST",
+          "encoding": "no-op",
+          "host": [
+            "http://host.docker.internal:1233"
+          ],
+          "extra_config": {
+            "qos/ratelimit/proxy": {
+    "max_rate": 0.5,
+    "capacity": 1
+}
+
+          }
+        }
+    ]
+}
+ ]
+}

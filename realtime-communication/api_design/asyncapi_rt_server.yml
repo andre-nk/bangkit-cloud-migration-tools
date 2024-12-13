@@ -1,0 +1,77 @@
+asyncapi: 3.0.0
+info:
+  title: Portier RT Server
+  version: 1.0.0
+  description: ""
+servers:
+  core-nats:
+    host: "localhost:4222"
+    protocol: nats
+channels:
+  command:
+    address: "{clientID}.{uid}"
+    messages:
+      request:
+        $ref: "#/components/messages/Request"
+      reply:
+        $ref: "#/components/messages/Reply"
+    description: Core NATS channel for real-time commands
+    parameters:
+      clientID:
+        $ref: "#/components/parameters/clientID"
+      uid:
+        $ref: "#/components/parameters/uid"
+operations:
+  request:
+    summary: Server publishes real-time commands
+    action: send
+    channel:
+      $ref: "#/channels/command"
+    messages:
+      - $ref: "#/channels/command/messages/request"
+    reply:
+      messages:
+        - $ref: "#/channels/command/messages/reply"
+      channel:
+        $ref: "#/channels/command"
+components:
+  parameters:
+    clientID:
+      description: Unique identifier for each client
+    uid:
+      description: Unique identifier for each user
+  messages:
+    Request:
+      headers:
+        type: object
+        properties:
+          version:
+            type: string
+      payload:
+        type: object
+        properties:
+          type:
+            type: string
+          command:
+            type: string
+          payload:
+            type: object
+    Reply:
+      headers:
+        type: object
+        properties:
+          currentVersion:
+            type: string
+          latestVersion:
+            type: string
+          outdated:
+            type: boolean
+      payload:
+        type: object
+        properties:
+          status:
+            type: integer
+          response:
+            type: string
+          payload:
+            type: object
